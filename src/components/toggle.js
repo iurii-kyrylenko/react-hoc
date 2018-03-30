@@ -1,15 +1,6 @@
 import React, { Component } from 'react';
 import { compose, withState, withHandlers, setDisplayName } from 'recompose';
 
-const withToggle = compose(
-  withState('toggledOn', 'toggle', false),
-  withHandlers({
-    show: ({ toggle }) => (e) => toggle(true),
-    hide: ({ toggle }) => (e) => toggle(false),
-    toggle: ({ toggle }) => (e) => toggle((current) => !current)
-  })
-)
-
 const StatusList = () =>
   <div>
     <div>pending</div>
@@ -17,8 +8,41 @@ const StatusList = () =>
     <div>active</div>
   </div>;
 
+// const withToggle = compose(
+//   withState('toggledOn', 'toggle', false),
+// )
+
+// const Status = withToggle(({ status, toggledOn, toggle }) =>
+//   <span style={{ cursor: 'pointer' }} onClick={() => toggle(c => !c)}>
+//     { status }
+//     { toggledOn && <StatusList /> }
+//   </span>
+// );
+
+// const Tooltip = withToggle(({ text, children, toggledOn, toggle }) =>
+//   <span>
+//     { toggledOn && <div style={{ position: 'absolute', left: 100, top: 20 }}>{ text }</div> }
+//     <span
+//       style={{ cursor: 'default' }}
+//       onMouseEnter={() => toggle(true)}
+//       onMouseLeave={() => toggle(false)}
+//     >
+//       {children}
+//     </span>
+//   </span>
+// );
+
+const withToggle = compose(
+  withState('toggledOn', 'toggle', false),
+  withHandlers({
+    show: ({ toggle }) => () => toggle(true),
+    hide: ({ toggle }) => () => toggle(false),
+    toggle: ({ toggle }) => () => toggle(c => !c),
+  })
+);
+
 const Status = withToggle(({ status, toggledOn, toggle }) =>
-  <span style={{ cursor: 'pointer' }} onClick={ toggle }>
+  <span style={{ cursor: 'pointer' }} onClick={toggle}>
     { status }
     { toggledOn && <StatusList /> }
   </span>
@@ -27,7 +51,13 @@ const Status = withToggle(({ status, toggledOn, toggle }) =>
 const Tooltip = withToggle(({ text, children, toggledOn, show, hide }) =>
   <span>
     { toggledOn && <div style={{ position: 'absolute', left: 100, top: 20 }}>{ text }</div> }
-    <span style={{ cursor: 'default' }} onMouseEnter={ show } onMouseLeave={ hide }>{ children }</span>
+    <span
+      style={{ cursor: 'default' }}
+      onMouseEnter={show}
+      onMouseLeave={hide}
+    >
+      {children}
+    </span>
   </span>
 );
 
