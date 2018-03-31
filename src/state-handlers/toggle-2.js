@@ -8,30 +8,6 @@ const StatusList = () =>
     <div>active</div>
   </div>;
 
-// const withToggle = compose(
-//   withState('toggledOn', 'toggle', false),
-// )
-
-// const Status = withToggle(({ status, toggledOn, toggle }) =>
-//   <span style={{ cursor: 'pointer' }} onClick={() => toggle(c => !c)}>
-//     { status }
-//     { toggledOn && <StatusList /> }
-//   </span>
-// );
-
-// const Tooltip = withToggle(({ text, children, toggledOn, toggle }) =>
-//   <span>
-//     { toggledOn && <div style={{ position: 'absolute', left: 100, top: 20 }}>{ text }</div> }
-//     <span
-//       style={{ cursor: 'default' }}
-//       onMouseEnter={() => toggle(true)}
-//       onMouseLeave={() => toggle(false)}
-//     >
-//       {children}
-//     </span>
-//   </span>
-// );
-
 const withToggle = compose(
   withState('toggledOn', 'toggle', false),
   withHandlers({
